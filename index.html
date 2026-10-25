@@ -8,7 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* Kilemannens apper v1.1.2
+/* Kilemannens apper v1.2.0
+   1.2.0  La til Kronekikk med myntstabel-ikon
    1.1.2  Løpespiller har fått nytt navn: Lommespiller
    1.1.1  Løpespiller: kortet viser til nedlastingssiden
    1.1.0  La til Løpespiller med kassettikon
@@ -74,7 +75,7 @@ footer{color:var(--muted);font:500 .8rem var(--mono)}
   <div class="grid" id="grid"></div>
   <p class="empty" id="empty" hidden>Ingen apper passer søket.</p>
 
-  <footer>Samleside v1.1.2</footer>
+  <footer>Samleside v1.2.0</footer>
 </main>
 
 <script>
@@ -82,7 +83,7 @@ footer{color:var(--muted);font:500 .8rem var(--mono)}
    LEGG TIL NYE APPER HER
    Kopier en blokk { ... }, lim den inn under de andre og endre teksten.
    url:  adressen til appen
-   icon: "sol", "fart", "kassett" eller "stjerne"
+   icon: "sol", "fart", "kassett", "mynter" eller "stjerne"
    ============================================================ */
 const APPS = [
   {
@@ -102,6 +103,12 @@ const APPS = [
     text: "Musikken din i lomma. Shuffle fra en mappe, styres med headset, ingen reklame og ingen nett.",
     url:  "https://kilemannen.github.io/Runlikehell.io/",
     icon: "kassett"
+  },
+  {
+    name: "Kronekikk",
+    text: "Dagens valutakurser og ukens kundeaviser fra REMA, Extra, Europris og Rusta.",
+    url:  "https://kilemannen.github.io/kronesjekk.io/",
+    icon: "mynter"
   },
 ];
 
@@ -123,6 +130,14 @@ const ICONS = {
           <circle cx="11.5" cy="13.5" r="1.8" fill="#1f4fa3" stroke="none"/>
           <circle cx="20.5" cy="13.5" r="1.8" fill="#1f4fa3" stroke="none"/>
           <path d="M9.5 25.5l1.8-3.8h9.4l1.8 3.8"/>
+        </svg>`,
+  mynter: `<svg viewBox="0 0 32 32" fill="none" stroke="#1f4fa3" stroke-width="1.9" stroke-linejoin="round">
+          <path d="M3 7v15c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V7" fill="#f0c040"/>
+          <path d="M3 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5M3 17c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/>
+          <ellipse cx="10" cy="7" rx="7" ry="2.5" fill="#1f4fa3"/>
+          <path d="M15 17v8c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-8" fill="#f0c040"/>
+          <path d="M15 21c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/>
+          <ellipse cx="22" cy="17" rx="7" ry="2.5" fill="#1f4fa3"/>
         </svg>`,
   stjerne: `<svg viewBox="0 0 32 32"><path d="M16 3l3.2 9.8L29 16l-9.8 3.2L16 29l-3.2-9.8L3 16l9.8-3.2z" fill="#1f4fa3"/></svg>`
 };
