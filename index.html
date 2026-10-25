@@ -8,7 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* Kilemannens apper v1.2.0
+/* Kilemannens apper v1.2.1
+   1.2.1  Nytt brukernavn kilemann: app-lenker er nå relative (/app.io/),
+          så de følger med hvis brukernavnet endres igjen
    1.2.0  La til Kronekikk med myntstabel-ikon
    1.1.2  Løpespiller har fått nytt navn: Lommespiller
    1.1.1  Løpespiller: kortet viser til nedlastingssiden
@@ -75,39 +77,39 @@ footer{color:var(--muted);font:500 .8rem var(--mono)}
   <div class="grid" id="grid"></div>
   <p class="empty" id="empty" hidden>Ingen apper passer søket.</p>
 
-  <footer>Samleside v1.2.0</footer>
+  <footer>Samleside v1.2.1</footer>
 </main>
 
 <script>
 /* ============================================================
    LEGG TIL NYE APPER HER
    Kopier en blokk { ... }, lim den inn under de andre og endre teksten.
-   url:  adressen til appen
+   url:  adressen til appen, f.eks. "/navn.io/" (= repo-navnet)
    icon: "sol", "fart", "kassett", "mynter" eller "stjerne"
    ============================================================ */
 const APPS = [
   {
     name: "Himmelur",
     text: "Soloppgang, solnedgang, dagslengde og månefase for valgt by og dato.",
-    url:  "https://kilemannen.github.io/himmelur.io/",
+    url:  "/himmelur.io/",
     icon: "sol"
   },
   {
     name: "Størrelsen teller",
     text: "Måler størrelsen din.................på nettet.",
-    url:  "https://kilemannen.github.io/strteller.io/",
+    url:  "/strteller.io/",
     icon: "fart"
   },
   {
     name: "Lommespiller",
     text: "Musikken din i lomma. Shuffle fra en mappe, styres med headset, ingen reklame og ingen nett.",
-    url:  "https://kilemannen.github.io/Runlikehell.io/",
+    url:  "/Runlikehell.io/",
     icon: "kassett"
   },
   {
     name: "Kronekikk",
     text: "Dagens valutakurser og ukens kundeaviser fra REMA, Extra, Europris og Rusta.",
-    url:  "https://kilemannen.github.io/kronesjekk.io/",
+    url:  "/kronesjekk.io/",
     icon: "mynter"
   },
 ];
