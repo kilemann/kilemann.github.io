@@ -1,0 +1,8 @@
+{
+  "name": "kilemann-github-io",
+  "version": "1.3.0",
+  "private": true,
+  "description": "Samleside for Kilemannens apper. Tester for siden.",
+  "scripts": { "test": "node --test \"test/*.test.js\"" },
+  "engines": { "node": ">=22" }
+}

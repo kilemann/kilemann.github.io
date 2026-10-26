@@ -8,7 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* Kilemannens apper v1.2.1
+/* Kilemannens apper v1.3.0
+   1.3.0  Hvert kort viser hvilken versjon appen har, hentet automatisk fra appens package.json
+          (vises ikke hvis den ikke kan hentes). Automatiske tester lagt til
    1.2.1  Nytt brukernavn kilemann: app-lenker er nå relative (/app.io/),
           så de følger med hvis brukernavnet endres igjen
    1.2.0  La til Kronekikk med myntstabel-ikon
@@ -77,7 +79,7 @@ footer{color:var(--muted);font:500 .8rem var(--mono)}
   <div class="grid" id="grid"></div>
   <p class="empty" id="empty" hidden>Ingen apper passer søket.</p>
 
-  <footer>Samleside v1.2.1</footer>
+  <footer>Samleside v1.3.0</footer>
 </main>
 
 <script>
@@ -155,6 +157,7 @@ function render(){
   grid.innerHTML = list.map(a => `
     <a class="card" href="${esc(a.url)}">
       <div class="badge" aria-hidden="true">${ICONS[a.icon] || ICONS.stjerne}</div>
+      ${versions[a.url] ? `<span class="ver" aria-label="Versjon ${esc(versions[a.url])}">v${esc(versions[a.url])}</span>` : ""}
       <h2>${esc(a.name)}</h2>
       <p>${esc(a.text)}</p>
       <span class="open">Åpne app ↗</span>
@@ -162,8 +165,31 @@ function render(){
   document.getElementById("count").textContent = `(${list.length})`;
   document.getElementById("empty").hidden = list.length > 0;
 }
+
+/* ---------- Versjon per app ----------
+   Hentes fra package.json i hver app, så tallet alltid er det som faktisk ligger ute.
+   Kortene vises først; versjonene tegnes inn når de kommer. Feil gir bare ingen versjonstekst. */
+const versions = {};
+function lesVersjon(d){
+  return d && typeof d.version === "string" && /^\d+\.\d+\.\d+$/.test(d.version) ? d.version : null;
+}
+async function hentVersjon(app){
+  const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 8000);
+  try{
+    const r = await fetch(app.url + "package.json", { cache: "no-cache", signal: ctl.signal });
+    if (!r.ok) return;
+    const v = lesVersjon(await r.json());
+    if (v) versions[app.url] = v;
+  }catch(e){ /* ingen versjon vises */ }
+  finally{ clearTimeout(t); }
+}
+async function loadVersions(){
+  await Promise.all(APPS.map(hentVersjon));
+}
+
 q.addEventListener("input", render);
 render();
+loadVersions().then(render);
 </script>
 </body>
 </html>
