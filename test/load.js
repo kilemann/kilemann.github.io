@@ -34,5 +34,6 @@ const ALLE = {
   'strteller.io': { json: { version: '1.6.0' } },
   'Runlikehell.io': { json: { version: '1.5.0' } },
   'kronesjekk.io': { json: { version: '1.5.0' } },
+  'solblikk.io': { json: { version: '0.1.1' } },
 };
 module.exports = { load, makeFetch, run, flush, plain, ALLE, ROOT, HTML };

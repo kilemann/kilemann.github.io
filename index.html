@@ -8,7 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* Kilemannens apper v1.3.0
+/* Kilemannens apper v1.4.0
+   1.4.0  La til Solblikk med kamera-og-sol-ikon
    1.3.0  Hvert kort viser hvilken versjon appen har, hentet automatisk fra appens package.json
           (vises ikke hvis den ikke kan hentes). Automatiske tester lagt til
    1.2.1  Nytt brukernavn kilemann: app-lenker er nå relative (/app.io/),
@@ -79,7 +80,7 @@ footer{color:var(--muted);font:500 .8rem var(--mono)}
   <div class="grid" id="grid"></div>
   <p class="empty" id="empty" hidden>Ingen apper passer søket.</p>
 
-  <footer>Samleside v1.3.0</footer>
+  <footer>Samleside v1.4.0</footer>
 </main>
 
 <script>
@@ -87,7 +88,7 @@ footer{color:var(--muted);font:500 .8rem var(--mono)}
    LEGG TIL NYE APPER HER
    Kopier en blokk { ... }, lim den inn under de andre og endre teksten.
    url:  adressen til appen, f.eks. "/navn.io/" (= repo-navnet)
-   icon: "sol", "fart", "kassett", "mynter" eller "stjerne"
+   icon: "sol", "fart", "kassett", "mynter", "kamera" eller "stjerne"
    ============================================================ */
 const APPS = [
   {
@@ -113,6 +114,12 @@ const APPS = [
     text: "Dagens valutakurser og ukens kundeaviser fra REMA, Extra, Europris og Rusta.",
     url:  "/kronesjekk.io/",
     icon: "mynter"
+  },
+  {
+    name: "Solblikk",
+    text: "Se solbanen for en valgt dato i kartet og live gjennom kameraet, med fjell og terreng tatt med.",
+    url:  "/solblikk.io/",
+    icon: "kamera"
   },
 ];
 
@@ -142,6 +149,14 @@ const ICONS = {
           <path d="M15 17v8c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-8" fill="#f0c040"/>
           <path d="M15 21c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/>
           <ellipse cx="22" cy="17" rx="7" ry="2.5" fill="#1f4fa3"/>
+        </svg>`,
+  kamera: `<svg viewBox="0 0 32 32" fill="none" stroke="#1f4fa3" stroke-width="2.2" stroke-linejoin="round">
+          <path d="M11.5 9.5l1.8-3h5.4l1.8 3" fill="#1f4fa3"/>
+          <rect x="3" y="9.5" width="26" height="17" rx="3"/>
+          <circle cx="16" cy="18" r="6"/>
+          <circle cx="16" cy="18" r="2.8" fill="#1f4fa3" stroke="none"/>
+          <circle cx="26" cy="4.6" r="2.1" fill="#1f4fa3" stroke="none"/>
+          <path d="M26 .6v1M22 4.6h1M29 4.6h1M23.2 1.8l.7.7M28.8 1.8l-.7.7M23.2 7.4l.7-.7M28.8 7.4l-.7-.7" stroke-width="1.5" stroke-linecap="round"/>
         </svg>`,
   stjerne: `<svg viewBox="0 0 32 32"><path d="M16 3l3.2 9.8L29 16l-9.8 3.2L16 29l-3.2-9.8L3 16l9.8-3.2z" fill="#1f4fa3"/></svg>`
 };
