@@ -71,7 +71,7 @@ test('Henter package.json fra selve appens adresse (versjonen som faktisk ligger
   const log = [];
   const l = load({ fetch: makeFetch(ALLE, log) });
   await run(l.env);
-  assert.deepEqual(log.map(x => x.url).sort(), ['/Runlikehell.io/package.json', '/himmelur.io/package.json', '/kronesjekk.io/package.json', '/prutto.io/package.json', '/solblikk.io/package.json', '/strteller.io/package.json']);
+  assert.deepEqual(log.map(x => x.url).sort(), ['/Prutto.io/package.json', '/Runlikehell.io/package.json', '/himmelur.io/package.json', '/kronesjekk.io/package.json', '/solblikk.io/package.json', '/strteller.io/package.json']);
   assert.ok(log.every(x => x.init && x.init.cache === 'no-cache'));
 });
 
@@ -147,11 +147,11 @@ test('Solblikk har eget kort med kamera-og-sol-ikon og lenker til /solblikk.io/'
 });
 
 /* ---------- 1.5.0: Prutt-O-Teket ---------- */
-test('Prutt-O-Teket har eget kort med fisesky-ikon og lenker til /prutto.io/', () => {
+test('Prutt-O-Teket har eget kort med fisesky-ikon og lenker til /Prutto.io/', () => {
   const l = load({ fetch: makeFetch({}) });
   const app = l.api.APPS.find(a => a.name === 'Prutt-O-Teket');
   assert.ok(app, 'Prutt-O-Teket mangler');
-  assert.equal(app.url, '/prutto.io/');
+  assert.equal(app.url, '/Prutto.io/');
   assert.equal(app.icon, 'fisesky');
   assert.match(l.api.ICONS.fisesky, /^\s*<svg[\s\S]*<\/svg>\s*$/);
   for (const ord of ['fise', 'prompe', 'PRUTT']) { søk(l, ord); assert.equal(kort(l), 1, ord); assert.match(l.env.el('grid').innerHTML, /Prutt-O-Teket/); }
@@ -171,4 +171,11 @@ test('Prutt-O-Teket-kortet forteller at lydene er ekte opptak', () => {
   assert.match(app.text, /ekte/i);
   assert.doesNotMatch(app.text, /lages live/i);
   søk(l, 'opptak'); assert.match(l.env.el('grid').innerHTML, /Prutt-O-Teket/);
+});
+
+/* ---------- 1.5.2: store/små bokstaver i adressen ---------- */
+test('Lenken til Prutt-O-Teket har stor P, som repoet (GitHub Pages skiller på store/små bokstaver)', () => {
+  const l = load({ fetch: makeFetch({}) });
+  assert.ok(l.env.el('grid').innerHTML.includes('href="/Prutto.io/"'));
+  assert.ok(!l.env.el('grid').innerHTML.includes('href="/prutto.io/"'));
 });
