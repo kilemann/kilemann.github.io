@@ -1,4 +1,4 @@
-# Kilemannens apper v1.5.0
+# Kilemannens apper v1.5.1
 Samleside for appene mine: https://kilemann.github.io/
 
 Hvert kort viser appens versjon. Den hentes fra `package.json` i hver app, så tallet er det som faktisk ligger ute.
@@ -13,6 +13,7 @@ npm test
 Krever Node 22 eller nyere. Ingen avhengigheter. Ved ny versjon: skriv testen først, sett `version` i `package.json`, og oppdater kommentaren og bunnteksten i `index.html`.
 
 ## Versjoner
+- 1.5.1 – Prutt-O-Teket har fått ekte lyder.
 - 1.5.0 – Prutt-O-Teket lagt til.
 - 1.4.0 – Solblikk lagt til.
 - 1.3.0 – Versjon vises i hvert kort, hentet automatisk. Automatiske tester.

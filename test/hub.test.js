@@ -163,3 +163,12 @@ test('Prutt-O-Teket-kortet viser versjonen fra appen', async () => {
   søk(l, 'prutt');
   assert.ok(l.env.el('grid').innerHTML.includes('>v2.0.0<'));
 });
+
+/* ---------- 1.5.1: Prutt-O-Teket har ekte lyder ---------- */
+test('Prutt-O-Teket-kortet forteller at lydene er ekte opptak', () => {
+  const l = load({ fetch: makeFetch({}) });
+  const app = l.api.APPS.find(a => a.name === 'Prutt-O-Teket');
+  assert.match(app.text, /ekte/i);
+  assert.doesNotMatch(app.text, /lages live/i);
+  søk(l, 'opptak'); assert.match(l.env.el('grid').innerHTML, /Prutt-O-Teket/);
+});
