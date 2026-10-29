@@ -36,5 +36,6 @@ const ALLE = {
   'kronesjekk.io': { json: { version: '1.5.0' } },
   'solblikk.io': { json: { version: '0.1.1' } },
   'Prutto.io': { json: { version: '2.0.0' } },
+  'Vinyl-Vault.io': { json: { version: '1.0.0' } },
 };
 module.exports = { load, makeFetch, run, flush, plain, ALLE, ROOT, HTML };
