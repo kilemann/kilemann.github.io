@@ -7,11 +7,11 @@ const kort = l => (l.env.el('grid').innerHTML.match(/<a class="card"/g) || []).l
 const søk = (l, tekst) => { l.env.el('q').value = tekst; l.env.el('q').dispatch('input'); };
 
 /* ---------- grunnfunksjoner (finnes fra før) ---------- */
-test('Starter med alle sju appene som kort, og telleren stemmer', () => {
+test('Starter med alle åtte appene som kort, og telleren stemmer', () => {
   const l = load({ fetch: makeFetch({}) });
-  assert.equal(kort(l), 7);
-  assert.equal(l.env.el('count').textContent, '(7)');
-  for (const n of ['Himmelur', 'Størrelsen teller', 'Lommespiller', 'Kronekikk', 'Solblikk', 'Prutt-O-Teket', 'Vinyl Vault']) assert.match(l.env.el('grid').innerHTML, new RegExp('<h2>' + n + '</h2>'));
+  assert.equal(kort(l), 8);
+  assert.equal(l.env.el('count').textContent, '(8)');
+  for (const n of ['Himmelur', 'Størrelsen teller', 'Lommespiller', 'Kronekikk', 'Solblikk', 'Prutt-O-Teket', 'Vinyl Vault', 'Middags panikk™']) assert.match(l.env.el('grid').innerHTML, new RegExp('<h2>' + n + '</h2>'));
 });
 
 test('Hvert kort lenker relativt til appen, så det følger med hvis brukernavnet endres', () => {
@@ -24,7 +24,7 @@ test('Søk: ignorerer store/små bokstaver og aksenter, og søker i navn og teks
   søk(l, 'HIMMEL'); assert.equal(kort(l), 1); assert.equal(l.env.el('count').textContent, '(1)');
   søk(l, 'valutakurser'); assert.equal(kort(l), 1);
   søk(l, 'musikk'); assert.match(l.env.el('grid').innerHTML, /Lommespiller/);
-  søk(l, ''); assert.equal(kort(l), 7);
+  søk(l, ''); assert.equal(kort(l), 8);
 });
 
 test('Søk uten treff viser «ingen apper»-teksten, og skjuler den igjen', () => {
@@ -51,7 +51,7 @@ test('Versjon vises i hvert kort når den er hentet, med tilgjengelig tekst', as
   const l = load({ fetch: makeFetch(ALLE) });
   await run(l.env);
   const h = l.env.el('grid').innerHTML;
-  assert.equal((h.match(/class="ver"/g) || []).length, 7);
+  assert.equal((h.match(/class="ver"/g) || []).length, 8);
   for (const v of ['v1.7.0', 'v1.6.0', 'v1.5.0', 'v0.1.1', 'v2.0.0']) assert.ok(h.includes('>' + v + '<'), v);
   assert.match(h, /aria-label="Versjon 1\.7\.0"/);
 });
@@ -72,13 +72,13 @@ test('Henter package.json fra selve appens adresse (versjonen som faktisk ligger
   const log = [];
   const l = load({ fetch: makeFetch(ALLE, log) });
   await run(l.env);
-  assert.deepEqual(log.map(x => x.url).sort(), ['/Prutto.io/package.json', '/Runlikehell.io/package.json', '/Vinyl-Vault.io/package.json', '/himmelur.io/package.json', '/kronesjekk.io/package.json', '/solblikk.io/package.json', '/strteller.io/package.json']);
+  assert.deepEqual(log.map(x => x.url).sort(), ['/Middagspanikk.io/package.json', '/Prutto.io/package.json', '/Runlikehell.io/package.json', '/Vinyl-Vault.io/package.json', '/himmelur.io/package.json', '/kronesjekk.io/package.json', '/solblikk.io/package.json', '/strteller.io/package.json']);
   assert.ok(log.every(x => x.init && x.init.cache === 'no-cache'));
 });
 
 test('Kortene vises med en gang, uten å vente på nettet', () => {
   const l = load({ fetch: () => new Promise(() => {}) });   // svarer aldri
-  assert.equal(kort(l), 7);
+  assert.equal(kort(l), 8);
   assert.ok(!l.env.el('grid').innerHTML.includes('class="ver"'));
 });
 
@@ -87,8 +87,8 @@ test('Feil på én app (404, nettfeil, ødelagt svar, ugyldig versjon) skjuler b
     const l = load({ fetch: makeFetch({ ...ALLE, 'strteller.io': feil }) });
     await run(l.env);
     const h = l.env.el('grid').innerHTML;
-    assert.equal((h.match(/class="ver"/g) || []).length, 6, JSON.stringify(feil));
-    assert.equal(kort(l), 7);
+    assert.equal((h.match(/class="ver"/g) || []).length, 7, JSON.stringify(feil));
+    assert.equal(kort(l), 8);
     assert.ok(!h.includes('<script>'));
   }
 });
@@ -96,7 +96,7 @@ test('Feil på én app (404, nettfeil, ødelagt svar, ugyldig versjon) skjuler b
 test('Uten nett i det hele tatt virker siden som før', async () => {
   const l = load({ fetch: makeFetch({ x: new TypeError('offline') }) });
   await run(l.env);
-  assert.equal(kort(l), 7);
+  assert.equal(kort(l), 8);
   assert.ok(!l.env.el('grid').innerHTML.includes('class="ver"'));
 });
 
@@ -104,8 +104,8 @@ test('Tidsavbrudd: hengende forespørsel avbrytes etter 8 sekunder', async () =>
   let avbrutt = 0;
   const l = load({ fetch: (url, init) => new Promise((_, rej) => init.signal.addEventListener('abort', () => { avbrutt++; rej(Object.assign(new Error('avbrutt'), { name: 'AbortError' })); })) });
   await run(l.env, 7999); assert.equal(avbrutt, 0);
-  await run(l.env, 2); assert.equal(avbrutt, 7);
-  assert.equal(kort(l), 7);
+  await run(l.env, 2); assert.equal(avbrutt, 8);
+  assert.equal(kort(l), 8);
 });
 
 test('Søk etter at versjonene er hentet beholder versjonene i kortene som er igjen', async () => {
@@ -115,7 +115,7 @@ test('Søk etter at versjonene er hentet beholder versjonene i kortene som er ig
   assert.equal(kort(l), 1);
   assert.ok(l.env.el('grid').innerHTML.includes('>v1.7.0<'));
   søk(l, '');
-  assert.equal((l.env.el('grid').innerHTML.match(/class="ver"/g) || []).length, 7);
+  assert.equal((l.env.el('grid').innerHTML.match(/class="ver"/g) || []).length, 8);
 });
 
 test('Versjoner som kommer inn mens du søker, tegnes inn uten å endre søket', async () => {
@@ -133,7 +133,7 @@ test('Versjonsvisningen gir ikke feil for ukjent app lagt til senere', async () 
   const l = load({ fetch: makeFetch(ALLE) });
   l.api.APPS.push({ name: 'Ny', text: 'x', url: '/ny.io/', icon: 'stjerne' });
   await l.api.loadVersions(); l.api.render();
-  assert.equal(kort(l), 8);
+  assert.equal(kort(l), 9);
 });
 
 /* ---------- 1.4.0: Solblikk ---------- */
@@ -179,4 +179,23 @@ test('Lenken til Prutt-O-Teket har stor P, som repoet (GitHub Pages skiller på 
   const l = load({ fetch: makeFetch({}) });
   assert.ok(l.env.el('grid').innerHTML.includes('href="/Prutto.io/"'));
   assert.ok(!l.env.el('grid').innerHTML.includes('href="/prutto.io/"'));
+});
+
+/* ---------- 1.7.0: Middags panikk ---------- */
+test('Middags panikk™ har eget kort med middagstallerken-ikon og lenker til /Middagspanikk.io/ (stor M, som repoet)', () => {
+  const l = load({ fetch: makeFetch({}) });
+  const app = l.api.APPS.find(a => a.name === 'Middags panikk™');
+  assert.ok(app, 'Middags panikk™ mangler');
+  assert.equal(app.url, '/Middagspanikk.io/');
+  assert.equal(app.icon, 'tallerken');
+  assert.match(l.api.ICONS.tallerken, /^\s*<svg[\s\S]*<\/svg>\s*$/);
+  assert.ok(l.env.el('grid').innerHTML.includes('href="/Middagspanikk.io/"'));
+  for (const ord of ['middag', 'PANIKK', 'handleliste']) { søk(l, ord); assert.equal(kort(l), 1, ord); assert.match(l.env.el('grid').innerHTML, /Middags panikk™/); }
+});
+
+test('Middags panikk™-kortet viser versjonen fra appen', async () => {
+  const l = load({ fetch: makeFetch(ALLE) });
+  await run(l.env);
+  søk(l, 'panikk');
+  assert.ok(l.env.el('grid').innerHTML.includes('>v1.0.0<'));
 });
