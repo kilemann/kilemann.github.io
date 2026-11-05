@@ -38,5 +38,6 @@ const ALLE = {
   'Prutto.io': { json: { version: '2.0.0' } },
   'Vinyl-Vault.io': { json: { version: '1.0.0' } },
   'Middagspanikk.io': { json: { version: '1.0.0' } },
+  'Snuttefanger.io': { json: { version: '0.2.0' } },
 };
 module.exports = { load, makeFetch, run, flush, plain, ALLE, ROOT, HTML };
