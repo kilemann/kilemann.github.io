@@ -11,7 +11,7 @@ test('Starter med alle ti appene som kort, og telleren stemmer', () => {
   const l = load({ fetch: makeFetch({}) });
   assert.equal(kort(l), 10);
   assert.equal(l.env.el('count').textContent, '(10)');
-  for (const n of ['Himmelur', 'Størrelsen teller', 'Lommespiller', 'Kronekikk', 'Solblikk', 'Prutt-O-Teket', 'Vinyl Vault', 'Middags panikk™', 'Snuttefanger', 'Globetrotter']) assert.match(l.env.el('grid').innerHTML, new RegExp('<h2>' + n + '</h2>'));
+  for (const n of ['Himmelur', 'Størrelsen teller', 'Lommespiller', 'Kronekikk', 'Solblikk', 'Prutt-O-Teket', 'Vinyl Vault', 'Middags panikk™', 'Snuttefanger', 'Stedsnuser']) assert.match(l.env.el('grid').innerHTML, new RegExp('<h2>' + n + '</h2>'));
 });
 
 test('Hvert kort lenker relativt til appen, så det følger med hvis brukernavnet endres', () => {
@@ -228,15 +228,16 @@ test('Snuttefanger-kortet viser versjonen fra appen', async () => {
 });
 
 /* ---------- 1.9.0: Globetrotter ---------- */
-test('Globetrotter har eget kort med globus-ikon og lenker til /Globetrotter.io/ (stor G, som repoet)', () => {
+test('Stedsnuser har eget kort med globus-ikon og lenker til /Globetrotter.io/ (repoet har beholdt navnet, stor G)', () => {
   const l = load({ fetch: makeFetch({}) });
-  const app = l.api.APPS.find(a => a.name === 'Globetrotter');
-  assert.ok(app, 'Globetrotter mangler');
+  const app = l.api.APPS.find(a => a.name === 'Stedsnuser');
+  assert.ok(app, 'Stedsnuser mangler');
   assert.equal(app.url, '/Globetrotter.io/');
   assert.equal(app.icon, 'globus');
   assert.match(l.api.ICONS.globus, /^\s*<svg[\s\S]*<\/svg>\s*$/);
   assert.ok(l.env.el('grid').innerHTML.includes('href="/Globetrotter.io/"'));
-  for (const ord of ['globe', 'WIKIPEDIA', 'google maps', 'land']) { søk(l, ord); assert.match(l.env.el('grid').innerHTML, /Globetrotter/, ord); }
+  for (const ord of ['snuse', 'STEDSNUSER', 'WIKIPEDIA', 'google maps']) { søk(l, ord); assert.match(l.env.el('grid').innerHTML, /Stedsnuser/, ord); }
+  assert.ok(!l.api.APPS.some(a => a.name === 'Globetrotter'), 'gammelt navn skal være borte');
 });
 
 test('Globus-ikonet holder seg innenfor ikonflaten', () => {
@@ -247,10 +248,10 @@ test('Globus-ikonet holder seg innenfor ikonflaten', () => {
   }
 });
 
-test('Globetrotter-kortet viser versjonen fra appen', async () => {
+test('Stedsnuser-kortet viser versjonen fra appen', async () => {
   const l = load({ fetch: makeFetch(ALLE) });
   await run(l.env);
-  søk(l, 'globetrotter');
+  søk(l, 'stedsnuser');
   assert.equal(kort(l), 1);
-  assert.ok(l.env.el('grid').innerHTML.includes('>v1.0.0<'));
+  assert.ok(l.env.el('grid').innerHTML.includes('>v1.1.0<'));
 });
