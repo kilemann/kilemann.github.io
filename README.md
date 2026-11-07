@@ -1,4 +1,4 @@
-# Kilemannens apper v1.8.0
+# Kilemannens apper v1.9.0
 Samleside for appene mine: https://kilemann.github.io/
 
 Hvert kort viser appens versjon. Den hentes fra `package.json` i hver app, så tallet er det som faktisk ligger ute.
@@ -13,6 +13,7 @@ npm test
 Krever Node 22 eller nyere. Ingen avhengigheter. Ved ny versjon: skriv testen først, sett `version` i `package.json`, og oppdater kommentaren og bunnteksten i `index.html`.
 
 ## Versjoner
+- 1.9.0 – Globetrotter lagt til.
 - 1.8.0 – Snuttefanger lagt til.
 - 1.7.1 – Prutt-O-Teket: korttekst oppdatert til 47 opptak.
 - 1.7.0 – Middags panikk™ lagt til.
