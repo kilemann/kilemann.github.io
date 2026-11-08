@@ -236,7 +236,7 @@ test('Stedsnuser har eget kort med globus-ikon og lenker til /Globetrotter.io/ (
   assert.equal(app.icon, 'globus');
   assert.match(l.api.ICONS.globus, /^\s*<svg[\s\S]*<\/svg>\s*$/);
   assert.ok(l.env.el('grid').innerHTML.includes('href="/Globetrotter.io/"'));
-  for (const ord of ['snuse', 'STEDSNUSER', 'WIKIPEDIA', 'google maps']) { søk(l, ord); assert.match(l.env.el('grid').innerHTML, /Stedsnuser/, ord); }
+  for (const ord of ['snuse', 'STEDSNUSER', 'WIKIPEDIA', 'google maps', 'globus', 'pin']) { søk(l, ord); assert.match(l.env.el('grid').innerHTML, /Stedsnuser/, ord); }
   assert.ok(!l.api.APPS.some(a => a.name === 'Globetrotter'), 'gammelt navn skal være borte');
 });
 
@@ -253,5 +253,5 @@ test('Stedsnuser-kortet viser versjonen fra appen', async () => {
   await run(l.env);
   søk(l, 'stedsnuser');
   assert.equal(kort(l), 1);
-  assert.ok(l.env.el('grid').innerHTML.includes('>v1.1.0<'));
+  assert.ok(l.env.el('grid').innerHTML.includes('>v2.0.0<'));
 });
